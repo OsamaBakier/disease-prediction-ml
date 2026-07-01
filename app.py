@@ -1,0 +1,69 @@
+import streamlit as st
+import pickle
+import pandas as pd
+import numpy as np
+import requests
+import time
+from streamlit_lottie import st_lottie
+
+def load_lottieurl(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+lottie_medical = load_lottieurl("https://lottie.host/81a943bc-42b4-4e2b-bbd4-59e51f8b46e3/d6m85HjR3m.json")
+
+st.title("AI Disease Prediction System")
+st.markdown("---")
+
+with open("src/symptom_model.pkl", "rb") as file:
+    model_nb = pickle.load(file)
+
+with open("src/label_encoder.pkl", "rb") as file:
+    encoder = pickle.load(file)
+
+with open("src/features_list.pkl", "rb") as file:
+    features_list = pickle.load(file)
+
+display_features = [symptom.replace("_", " ").title() for symptom in features_list]
+
+st.sidebar.header("📋 Patient Inputs")
+st.sidebar.write("Please select the symptoms you are experiencing:")
+
+if st.sidebar.button("Reset Application"):
+    st.rerun()
+
+user_choices = st.sidebar.multiselect("Select your symptoms:", display_features)
+
+if user_choices:
+    input_data = np.zeros(len(features_list))
+
+    for symptom in user_choices:
+
+        if symptom in display_features:
+
+            index = display_features.index(symptom)
+            input_data[index] = 1
+    
+    input_data = input_data.reshape(1, -1)
+    input_data_df = pd.DataFrame(input_data, columns=features_list)
+ 
+    predicted_numeirc = model_nb.predict(input_data_df)
+    predicted_disease = encoder.inverse_transform(predicted_numeirc)[0]
+
+    progress_bar = st.progress(0)
+    status_text = st.empty()
+    for percent_complete in range(100):
+        time.sleep(0.01)
+        progress_bar.progress(percent_complete+1)
+        status_text.text(f"🧠 AI Diagnosing Symptoms: {percent_complete + 1}%")
+    status_text.empty()
+    progress_bar.empty()
+
+    st.subheader("📊 Prediction Analysis")
+    st.success(f"Based on the reported symptoms, The predicted disease is: **{predicted_disease}**")
+else:
+    st.info("Welcome! Please go to the sidebar on the left and select your symptoms to generate a prediction report.")
+    if lottie_medical:
+        st_lottie(lottie_medical, height=200, key="medical_robot")
