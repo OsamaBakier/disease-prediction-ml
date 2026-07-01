@@ -2,17 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-import requests
 import time
-from streamlit_lottie import st_lottie
-
-def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-
-lottie_medical = load_lottieurl("https://lottie.host/81a943bc-42b4-4e2b-bbd4-59e51f8b46e3/d6m85HjR3m.json")
 
 st.title("AI Disease Prediction System")
 st.markdown("---")
@@ -65,5 +55,3 @@ if user_choices:
     st.success(f"Based on the reported symptoms, The predicted disease is: **{predicted_disease}**")
 else:
     st.info("Welcome! Please go to the sidebar on the left and select your symptoms to generate a prediction report.")
-    if lottie_medical:
-        st_lottie(lottie_medical, height=200, key="medical_robot")
