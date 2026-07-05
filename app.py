@@ -4,7 +4,10 @@ import pandas as pd
 import numpy as np
 import time
 
-st.title("AI Disease Prediction System")
+st.title("AI Disease Prediction System 🩺")
+st.warning(
+    "⚠️ **Disclaimer:** This application is intended for educational purposes only and should not be considered a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional for medical concerns."
+           )
 st.markdown("---")
 
 with open("src/symptom_model.pkl", "rb") as file:
@@ -50,8 +53,18 @@ if user_choices:
         status_text.text(f"🧠 AI Diagnosing Symptoms: {percent_complete + 1}%")
     status_text.empty()
     progress_bar.empty()
+    
+    with st.container(border=True):
+        st.subheader("🩺 Prediction Result")
+        st.divider()
 
-    st.subheader("📊 Prediction Analysis")
-    st.success(f"Based on the reported symptoms, The predicted disease is: **{predicted_disease}**")
+        st.markdown("#### Disease")
+        st.success(predicted_disease)
+
+        st.markdown("#### Machine Learning Model")
+        st.info("Naive Bayes")
+
 else:
-    st.info("Welcome! Please go to the sidebar on the left and select your symptoms to generate a prediction report.")
+    st.info("👈 Select one or more symptoms from the sidebar to begin the prediction.")
+
+st.caption("Developed by Osama Bakier")
