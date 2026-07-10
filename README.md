@@ -6,23 +6,33 @@ The application is built with Python and Streamlit and uses a trained Naive Baye
 
 > ⚠️ This project is developed for educational purposes only and should not be used as a medical diagnostic tool.
 
-## Features
+## Key Features
 
 - Predict diseases based on selected symptoms.
 - Interactive web interface built with Streamlit.
 - Machine Learning model trained using Naive Bayes.
 - Clean and simple user experience.
-- Fast real-time prediction.
+- Real-time disease prediction using a trained Naive Bayes model.
 
 ## Tech Stack
 - Python
 - Streamlit
 - Scikit-learn
-- Pandas & NumPy
+- Pandas
+- NumPy
 
 ## Live Demo
-Check out the live application here: 
-[Disease Prediction App](https://ml-disease-detection.streamlit.app/)
+Check out the live application here: [Disease Prediction App](https://ml-disease-detection.streamlit.app/)
+
+## Project Preview
+
+### Home Page
+
+![Home Page](images/home.png)
+
+### Prediction Example
+
+![Prediction Example](images/prediction.png)
 
 ## Project Structure
 - data/: Training and testing datasets.
@@ -63,4 +73,7 @@ streamlit run app.py
 ```
 
 ## Author
+
+Developed by **Osama Bakier**
+
 - GitHub: [@OsamaBakier](https://github.com/OsamaBakier)
